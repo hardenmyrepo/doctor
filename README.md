@@ -25,6 +25,14 @@ The filename review is deliberately narrow. A flagged filename needs human revie
 
 Requires Node.js 20 or newer. No install step or npm package is required.
 
+Run the current GitHub release in one command:
+
+```bash
+npm exec --yes --package=github:hardenmyrepo/doctor -- harden-my-repo .
+```
+
+Or clone/download the repository and run the source directly:
+
 ```bash
 node src/cli.mjs /path/to/repository
 ```

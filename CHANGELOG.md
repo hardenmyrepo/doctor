@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 — 2026-07-16
+
+- Run the CLI correctly when package managers invoke its executable through a symlink.
+- Add a regression test for installed-package invocation.
+
 ## 1.0.0 — 2026-07-16
 
 - Initial dependency-free Node.js 20 CLI and GitHub Action.

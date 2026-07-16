@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -90,6 +90,17 @@ test('CLI writes Markdown and JSON before returning threshold failure', async (c
   const json = JSON.parse(await readFile(jsonPath, 'utf8'));
   assert.match(markdown, /Harden My Repo Doctor report/);
   assert.equal(json.score, 4);
+});
+
+test('CLI runs when invoked through an installed package symlink', async (context) => {
+  const root = await mkdtemp(path.join(tmpdir(), 'agentready-bin-'));
+  context.after(() => rm(root, { recursive: true, force: true }));
+  const linkedCli = path.join(root, 'harden-my-repo');
+  await symlink(cliPath, linkedCli);
+
+  const { stdout } = await execFileAsync(linkedCli, ['--help']);
+  assert.match(stdout, /Harden My Repo Doctor 1\.0\.1/);
+  assert.match(stdout, /--fail-below/);
 });
 
 test('argument parser validates thresholds and optional outputs', () => {

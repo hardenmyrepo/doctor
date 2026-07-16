@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
-import { appendFile, mkdir, readFile, readdir, stat, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, readFile, readdir, realpath, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const TOOL_VERSION = '1.0.0';
+const TOOL_VERSION = '1.0.1';
 const RESOURCE_URL = 'https://hardenmyrepo.com/free-ai-repo-audit';
 const MAX_FILES = 10_000;
 const MAX_TEXT_BYTES = 512 * 1024;
@@ -433,7 +433,14 @@ export async function run(argv = process.argv.slice(2)) {
   return report.score < options.failBelow ? 1 : 0;
 }
 
-const isEntryPoint = process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1]);
+let isEntryPoint = false;
+if (process.argv[1]) {
+  try {
+    isEntryPoint = await realpath(fileURLToPath(import.meta.url)) === await realpath(path.resolve(process.argv[1]));
+  } catch {
+    isEntryPoint = false;
+  }
+}
 if (isEntryPoint) {
   run().then((exitCode) => {
     process.exitCode = exitCode;

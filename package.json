@@ -1,6 +1,6 @@
 {
   "name": "harden-my-repo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dependency-free, network-free readiness audit for repositories using AI coding agents",
   "type": "module",
   "bin": {
