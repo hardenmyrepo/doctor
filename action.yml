@@ -1,0 +1,52 @@
+name: Harden My Repo Doctor
+description: Evidence-based, network-free audit of repository readiness for coding agents
+author: Harden My Repo
+
+branding:
+  icon: check-circle
+  color: purple
+
+inputs:
+  path:
+    description: Repository directory to inspect
+    required: false
+    default: .
+  markdown-output:
+    description: Path for the Markdown report
+    required: false
+    default: harden-my-repo-report.md
+  json-output:
+    description: Path for the JSON report
+    required: false
+    default: harden-my-repo-report.json
+  fail-below:
+    description: Fail the step when the score is below this value (0 disables the gate)
+    required: false
+    default: "0"
+  job-summary:
+    description: Append the Markdown report to the GitHub Actions job summary
+    required: false
+    default: "true"
+
+outputs:
+  score:
+    description: Readiness score from 0 to 100
+  rating:
+    description: Human-readable readiness band
+  markdown-report:
+    description: Absolute path to the Markdown report
+  json-report:
+    description: Absolute path to the JSON report
+
+runs:
+  using: node20
+  main: src/cli.mjs
+  args:
+    - ${{ inputs.path }}
+    - --markdown
+    - ${{ inputs['markdown-output'] }}
+    - --json
+    - ${{ inputs['json-output'] }}
+    - --fail-below
+    - ${{ inputs['fail-below'] }}
+    - ${{ inputs['job-summary'] == 'true' && '--github-summary' || '--no-github-summary' }}

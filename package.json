@@ -1,0 +1,44 @@
+{
+  "name": "harden-my-repo",
+  "version": "1.0.0",
+  "description": "Dependency-free, network-free readiness audit for repositories using AI coding agents",
+  "type": "module",
+  "bin": {
+    "harden-my-repo": "src/cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "src/",
+    "action.yml",
+    "README.md",
+    "SAMPLE_REPORT.md",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "ai-coding-agent",
+    "claude-code",
+    "codex",
+    "repository-audit",
+    "github-action",
+    "developer-tools"
+  ],
+  "homepage": "https://hardenmyrepo.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hardenmyrepo/doctor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hardenmyrepo/doctor/issues"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,0 +1,7 @@
+.env*
+!.env.example
+node_modules/
+coverage/
+dist/
+harden-my-repo-report.md
+harden-my-repo-report.json
